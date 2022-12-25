@@ -1,63 +1,69 @@
-from selenium import webdriver
-
-# Replace the URL with the link to the TikTok video you want to download
-url = "https://www.tiktok.com/@user/video/1234567890"
-
-# Create a webdriver instance and open the URL
-driver = webdriver.Firefox()
-driver.get(url)
-
-# Wait for the page to load and the video to be visible
-driver.implicitly_wait(10)
-
-# Find the video element and get its source URL
-video_element = driver.find_element_by_css_selector("video")
-video_url = video_element.get_attribute("src")
-
-# Use the URL to download the video
 import requests
+from getTTDict import getDict
+from getInfo import getLinkDict
 
-response = requests.get(video_url)
 
-# Save the video to a file
-with open("tiktok_video.mp4", "wb") as f:
-    f.write(response.content)
+def createHeader(parseDict) -> list:
 
-# Close the webdriver instance
-driver.quit()
+    cookies = {
+        'PHPSESSID': parseDict['PHPSESSID'],
+        'popCookie': parseDict['popCookie'],
+    }
+    headers = {
+        'authority': 'ttdownloader.com',
+        'accept': '*/*',
+        'accept-language': 'en-US,en;q=0.9',
+        'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'origin': 'https://ttdownloader.com',
+        'referer': 'https://ttdownloader.com/',
+        'sec-ch-ua': '"Not?A_Brand";v="8", "Chromium";v="108", "Google Chrome";v="108"',
+        'sec-ch-ua-mobile': '?0',
+        'sec-ch-ua-platform': '"Windows"',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'same-origin',
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36',
+        'x-requested-with': 'XMLHttpRequest',
+    }
+    data = {
+        'url': '',
+        'format': '',
+        'token': parseDict['token'],
+    }
+    return cookies, headers, data
 
-from selenium import webdriver
 
-# Replace the URL with the link to the Instagram video you want to download
-url = "https://www.instagram.com/p/1234567890/"
+def TDL(cookies, headers, data, name) -> None:
+    response = requests.post('https://ttdownloader.com/search/',
+                             cookies=cookies, headers=headers, data=data)
+    linkParse = [i for i in str(response.text).split()
+                 if i.startswith("href=")][0]
 
-# Create a webdriver instance and open the URL
-driver = webdriver.Firefox()
-driver.get(url)
+    response = requests.get(linkParse[6:-10])
+    with open("./vids/"+name+".mp4", "wb") as f:
+        f.write(response.content)
 
-# Wait for the page to load and the video to be visible
-driver.implicitly_wait(10)
 
-# Find the video element and get its source URL
-video_element = driver.find_element_by_css_selector("video")
-video_url = video_element.get_attribute("src")
+def TDLALL() -> None:
+    parseDict = getDict()
+    cookies, headers, data = createHeader(parseDict)
+    linkList = getLinkDict()['tiktok']
+    for i in linkList:
+        try:
+            data['url'] = i
+            TDL(cookies, headers, data, str(linkList.index(i)))
+        except IndexError:
+            parseDict = getDict()
+            cookies, headers, data = createHeader(parseDict)
+        except Exception as err:
+            print(err)
+            exit(1)
 
-# Use the URL to download the video
-import requests
-
-response = requests.get(video_url)
-
-# Save the video to a file
-with open("instagram_video.mp4", "wb") as f:
-    f.write(response.content)
-
-# Close the webdriver instance
-driver.quit()
-
-def TDL() -> None:
-    
-    pass
 
 def IDL() -> None:
+    #soon
     pass
 
+
+if __name__ == "__main__":
+    TDLALL()

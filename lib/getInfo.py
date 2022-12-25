@@ -1,7 +1,7 @@
 def getList()->list:
-    with open("./data/data.txt") as f: return [item.strip() for item in f.read().split('\n')]
+    with open("../data/data.txt") as f: return [item.strip() for item in f.read().split('\n')]
 
-def getDict()->dict:
+def getLinkDict()->dict:
     values={"tiktok":[],"instagram":[]}
     for item in getList():
         if item.startswith('https://www.instagram.com'):
@@ -10,7 +10,3 @@ def getDict()->dict:
             values['tiktok'].append(item)
     return values
 
-
-if __name__ == "__main__":
-    print(getDict()['tiktok'])
-    print(getDict()['instagram'])
