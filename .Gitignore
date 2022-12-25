@@ -5,7 +5,10 @@ __pycache__/
 
 # C extensions
 *.so
-
+*.mp4
+.txt
+auth.txt
+data.txt
 # Distribution / packaging
 .Python
 build/
@@ -14,7 +17,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
 lib64/
 parts/
 sdist/
