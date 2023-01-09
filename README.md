@@ -1,6 +1,6 @@
 # tiktok-and-instagram-content-stealer
 
-the program steals the videos from the links inputted in data.txt without watermarks, it can also send them to the telegram channel of your choice.
+this program allows you to save multiple videos or photos to your device from instagram and tiktok without a watermark and you have an option to send all these saved videos to the telegram channel of your choice.
 
 ## how to execute
 
