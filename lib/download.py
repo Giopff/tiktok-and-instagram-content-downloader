@@ -1,7 +1,7 @@
 import requests
 from getTTDict import getDict
 from getInfo import getLinkDict
-
+import instaloader
 
 def createHeader(parseDict) -> list:
 
@@ -40,7 +40,7 @@ def TDL(cookies, headers, data, name) -> None:
                  if i.startswith("href=")][0]
 
     response = requests.get(linkParse[6:-10])
-    with open("./vids/"+name+".mp4", "wb") as f:
+    with open("./vids/"+"tiktok"+name+".mp4", "wb") as f:
         f.write(response.content)
 
 
@@ -60,10 +60,31 @@ def TDLALL() -> None:
             exit(1)
 
 
-def IDL() -> None:
-    #soon
-    pass
+def IDL(url,name) -> None:
+    obj = instaloader.Instaloader()
+    post = instaloader.Post.from_shortcode(obj.context, url.split('p/')[1].strip('/ '))
+    photo_url = post.url
+    video_url = post.video_url
+    if video_url:
+        response = requests.get(video_url)
+        with open("./vids/"+"insta"+name+".mp4", "wb") as f:
+            f.write(response.content)
+    elif photo_url:
+        response = requests.get(photo_url)
+        with open("./vids/"+"insta" +name+".jpg", "wb") as f:
+            f.write(response.content)
+
+def IDLALL() -> None:
+    linkList = getLinkDict()['instagram']
+    for i in linkList:
+        try:
+            IDL(i,str(linkList.index(i)))
+        except Exception as err:
+            print(err)
+            exit(1)
 
 
 if __name__ == "__main__":
-    TDLALL()
+    # TDLALL()
+    # IDLALL()
+    pass

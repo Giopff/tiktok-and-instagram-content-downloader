@@ -1,7 +1,11 @@
 from download import TDLALL
+from download import IDLALL
 from sendT import sendTelmain
 
+
+
 def launch():
+    IDLALL()
     TDLALL()
     #sendTelmain()
 
