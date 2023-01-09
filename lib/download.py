@@ -7,7 +7,7 @@ def createHeader(parseDict) -> list:
 
     cookies = {
         'PHPSESSID': parseDict['PHPSESSID'],
-        'popCookie': parseDict['popCookie'],
+        # 'popCookie': parseDict['popCookie'],
     }
     headers = {
         'authority': 'ttdownloader.com',
