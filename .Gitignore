@@ -7,6 +7,8 @@ __pycache__/
 *.so
 *.mp4
 *.txt
+*.jpg
+*.png
 # auth.txt
 # ./data/data.txt
 # Distribution / packaging
