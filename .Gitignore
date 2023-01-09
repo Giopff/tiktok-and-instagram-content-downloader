@@ -6,9 +6,9 @@ __pycache__/
 # C extensions
 *.so
 *.mp4
-.txt
-auth.txt
-data.txt
+*.txt
+# auth.txt
+# ./data/data.txt
 # Distribution / packaging
 .Python
 build/
