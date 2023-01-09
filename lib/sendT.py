@@ -11,7 +11,7 @@ async def sendTel():
     api_id, api_hash = op()
     async with TelegramClient('', api_id, api_hash) as client:
         await client.connect()
-        channel = await client.get_entity('https://t.me/+ZEzZIXyFZxAxMDUy')
+        channel = await client.get_entity('telegram channel link')
         for video in os.listdir('./vids'):
             await client.send_file(channel, './vids/'+video)
 

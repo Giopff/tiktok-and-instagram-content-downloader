@@ -3,7 +3,7 @@ from sendT import sendTelmain
 
 def launch():
     TDLALL()
-    sendTelmain()
+    #sendTelmain()
 
 if __name__ == '__main__':
     launch()
